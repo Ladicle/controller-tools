@@ -58,6 +58,7 @@ var ValidationMarkers = mustMakeAllWithPrefix("kubebuilder:validation", markers.
 	Enum(nil),
 	Format(""),
 	Type(""),
+	Default(""),
 )
 
 // FieldOnlyMarkers list field-specific validation markers (i.e. those markers that don't make
@@ -158,6 +159,10 @@ type Type string
 //
 // This is often not necessary, but may be helpful with custom serialization.
 type Nullable struct{}
+
+// +controllertools:marker:generateHelp:category="CRD validation"
+// Default specifies the default value for this.
+type Default string
 
 func (m Maximum) ApplyToSchema(schema *v1beta1.JSONSchemaProps) error {
 	if schema.Type != "integer" {
@@ -282,5 +287,16 @@ func (m Type) ApplyFirst() {}
 
 func (m Nullable) ApplyToSchema(schema *v1beta1.JSONSchemaProps) error {
 	schema.Nullable = true
+	return nil
+}
+
+func (m Default) ApplyToSchema(schema *v1beta1.JSONSchemaProps) error {
+	// TODO(Ladicle): this func is a bit hacky and we should use
+	// AnyType as the Default.
+	valMarshalled, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+	schema.Default = &v1beta1.JSON{Raw: valMarshalled}
 	return nil
 }

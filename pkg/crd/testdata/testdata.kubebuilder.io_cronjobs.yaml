@@ -63,6 +63,11 @@ spec:
                   a pointer to distinguish between explicit zero and not specified.
                 format: int32
                 type: integer
+              hasDefaultValue:
+                default: "2"
+                description: This tests that this value has the default.
+                format: int32
+                type: integer
               jobTemplate:
                 description: Specifies the job that will be created when executing
                   a CronJob.
@@ -4943,6 +4948,7 @@ spec:
             required:
             - binaryName
             - canBeNull
+            - hasDefaultValue
             - jobTemplate
             - schedule
             - twoOfAKindPart0

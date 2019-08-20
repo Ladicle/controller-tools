@@ -93,6 +93,10 @@ type CronJobSpec struct {
 
 	// This tests that markers that are allowed on both fields and types are applied to types
 	TwoOfAKindPart1 LongerString `json:"twoOfAKindPart1"`
+
+	// This tests that this value has the default.
+	// +kubebuilder:validation:Default=2
+	HasDefaultValue int32 `json:"hasDefaultValue"`
 }
 
 // +kubebuilder:validation:MinLength=4

@@ -24,6 +24,17 @@ import (
 	"sigs.k8s.io/controller-tools/pkg/markers"
 )
 
+func (Default) Help() *markers.DefinitionHelp {
+	return &markers.DefinitionHelp{
+		Category: "CRD validation",
+		DetailedHelp: markers.DetailedHelp{
+			Summary: "specifies the default value for this.",
+			Details: "",
+		},
+		FieldHelp: map[string]markers.DetailedHelp{},
+	}
+}
+
 func (Enum) Help() *markers.DefinitionHelp {
 	return &markers.DefinitionHelp{
 		Category: "CRD validation",
